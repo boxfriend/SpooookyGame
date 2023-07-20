@@ -79,7 +79,7 @@ namespace Boxfriend.Player
 
         public void UpdateVelocity (ref Vector3 currentVelocity, float deltaTime)
         {
-            var gravityForce = Mathf.Max(_currentGravity + (_gravityForce * deltaTime), -_maxFallSpeed);
+            var gravityForce = Mathf.Min(_currentGravity + (_gravityForce * deltaTime), _maxFallSpeed);
             _currentGravity = (_characterMotor.GroundingStatus.IsStableOnGround ? 0 : gravityForce);
             var gravity = _currentGravity * Vector3.down;
 
