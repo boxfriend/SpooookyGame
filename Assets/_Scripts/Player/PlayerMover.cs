@@ -7,6 +7,12 @@ namespace Boxfriend.Player
     public class PlayerMover : MonoBehaviour, ICharacterController
     {
         [SerializeField] private KinematicCharacterMotor _characterMotor;
+
+        [Header("Gravity")]
+        [SerializeField] private float _gravityForce = 9.81f;
+        [SerializeField] private float _maxFallSpeed = 33f;
+        private float _currentGravity;
+
         [SerializeField] private LayerMask _collisionMask;
         [SerializeField] private PlayerInputProvider _inputProvider;
         [SerializeField] private float _walkSpeed, _sprintSpeed, _maxSpeed;
@@ -73,10 +79,14 @@ namespace Boxfriend.Player
 
         public void UpdateVelocity (ref Vector3 currentVelocity, float deltaTime)
         {
+            var gravityForce = Mathf.Max(_currentGravity + (_gravityForce * deltaTime), -_maxFallSpeed);
+            _currentGravity = (_characterMotor.GroundingStatus.IsStableOnGround ? 0 : gravityForce);
+            var gravity = _currentGravity * Vector3.down;
+
             var speed = false ? _sprintSpeed : _walkSpeed;
             var moveDirection = Vector3.ProjectOnPlane(transform.TransformDirection(_moveDirection * speed), _groundNormal);
-            moveDirection.y += -9.81f * deltaTime * deltaTime;
-            currentVelocity = moveDirection;
+
+            currentVelocity = moveDirection + gravity;
         }
 
         private void Reset ()
@@ -91,5 +101,6 @@ namespace Boxfriend.Player
 
             _collisionMask = ~0;
         }
+
     }
 }
