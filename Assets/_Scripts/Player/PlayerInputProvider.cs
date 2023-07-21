@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using Boxfriend.Input;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -14,7 +12,7 @@ namespace Boxfriend.Player
 
         public event Action<Vector3> OnMovement;
         public event Action<float> OnRotation;
-        public event Action OnInteract;
+        public event Action OnInteract, OnToggleLight;
 
         private void Awake ()
         {
@@ -28,6 +26,7 @@ namespace Boxfriend.Player
             _playerActions.Look.canceled += ctx => OnRotation?.Invoke(ctx.ReadValue<float>());
             
             _playerActions.Interact.performed += _ => OnInteract?.Invoke();
+            _playerActions.ToggleLight.performed += _ => OnToggleLight?.Invoke();
         }
 
         private void OnEnable ()

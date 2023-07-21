@@ -55,6 +55,15 @@ namespace Boxfriend.Input
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""ToggleLight"",
+                    ""type"": ""Button"",
+                    ""id"": ""0583cc32-d59b-42a5-b891-1b5d03517723"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -134,6 +143,17 @@ namespace Boxfriend.Input
                     ""action"": ""Look"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3a5512fe-000d-4765-9107-7579b3ea985f"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ToggleLight"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -173,6 +193,7 @@ namespace Boxfriend.Input
             m_Player_Movement = m_Player.FindAction("Movement", throwIfNotFound: true);
             m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
             m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
+            m_Player_ToggleLight = m_Player.FindAction("ToggleLight", throwIfNotFound: true);
             // Camera
             m_Camera = asset.FindActionMap("Camera", throwIfNotFound: true);
             m_Camera_Look = m_Camera.FindAction("Look", throwIfNotFound: true);
@@ -240,6 +261,7 @@ namespace Boxfriend.Input
         private readonly InputAction m_Player_Movement;
         private readonly InputAction m_Player_Interact;
         private readonly InputAction m_Player_Look;
+        private readonly InputAction m_Player_ToggleLight;
         public struct PlayerActions
         {
             private @InputActions m_Wrapper;
@@ -247,6 +269,7 @@ namespace Boxfriend.Input
             public InputAction @Movement => m_Wrapper.m_Player_Movement;
             public InputAction @Interact => m_Wrapper.m_Player_Interact;
             public InputAction @Look => m_Wrapper.m_Player_Look;
+            public InputAction @ToggleLight => m_Wrapper.m_Player_ToggleLight;
             public InputActionMap Get() { return m_Wrapper.m_Player; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -265,6 +288,9 @@ namespace Boxfriend.Input
                 @Look.started += instance.OnLook;
                 @Look.performed += instance.OnLook;
                 @Look.canceled += instance.OnLook;
+                @ToggleLight.started += instance.OnToggleLight;
+                @ToggleLight.performed += instance.OnToggleLight;
+                @ToggleLight.canceled += instance.OnToggleLight;
             }
 
             private void UnregisterCallbacks(IPlayerActions instance)
@@ -278,6 +304,9 @@ namespace Boxfriend.Input
                 @Look.started -= instance.OnLook;
                 @Look.performed -= instance.OnLook;
                 @Look.canceled -= instance.OnLook;
+                @ToggleLight.started -= instance.OnToggleLight;
+                @ToggleLight.performed -= instance.OnToggleLight;
+                @ToggleLight.canceled -= instance.OnToggleLight;
             }
 
             public void RemoveCallbacks(IPlayerActions instance)
@@ -346,6 +375,7 @@ namespace Boxfriend.Input
             void OnMovement(InputAction.CallbackContext context);
             void OnInteract(InputAction.CallbackContext context);
             void OnLook(InputAction.CallbackContext context);
+            void OnToggleLight(InputAction.CallbackContext context);
         }
         public interface ICameraActions
         {
