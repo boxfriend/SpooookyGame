@@ -335,6 +335,15 @@
       "dependencies": {},
       "url": "https://unitynuget-registry.azurewebsites.net"
     },
+    "org.nuget.serilog.sinks.file": {
+      "version": "5.0.0",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "org.nuget.serilog": "2.10.0"
+      },
+      "url": "https://unitynuget-registry.azurewebsites.net"
+    },
     "com.unity.modules.ai": {
       "version": "1.0.0",
       "depth": 0,

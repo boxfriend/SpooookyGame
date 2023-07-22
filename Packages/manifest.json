@@ -17,6 +17,7 @@
     "com.unity.visualscripting": "1.8.0",
     "com.vertx.debugging": "2.1.4",
     "org.nuget.serilog": "3.0.1",
+    "org.nuget.serilog.sinks.file": "5.0.0",
     "com.unity.modules.ai": "1.0.0",
     "com.unity.modules.androidjni": "1.0.0",
     "com.unity.modules.animation": "1.0.0",
