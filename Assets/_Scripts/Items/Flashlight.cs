@@ -34,10 +34,13 @@ namespace Boxfriend
             if(_light.enabled)
             {
                 _lightCharge -= Time.deltaTime / _lightDuration;
+                _lightCharge = Math.Max(0, _lightCharge);
+                OnChargeChange?.Invoke(_lightCharge);
 
                 if(_lightCharge <= 0)
                 {
                     _light.enabled = false;
+
                 }
             }
         }
@@ -57,6 +60,7 @@ namespace Boxfriend
                 remaining = _lightCharge + rechargeAmount - 1f;
 
             _lightCharge = Mathf.Clamp(_lightCharge + rechargeAmount, 0, 1f);
+            OnChargeChange?.Invoke(_lightCharge);
 
             return remaining;
         }
