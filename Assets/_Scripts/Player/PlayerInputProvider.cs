@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 namespace Boxfriend.Player
 {
-    public class PlayerInputProvider : MonoBehaviour
+    public class PlayerInputProvider : MonoBehaviour, IClientSideComponent
     {
         private InputActions _inputActions;
         private InputActions.PlayerActions _playerActions;
@@ -13,8 +13,9 @@ namespace Boxfriend.Player
         public event Action<Vector3> OnMovement;
         public event Action<float> OnRotation;
         public event Action OnInteract, OnToggleLight;
+        public event Action<bool> OnSprint;
 
-        private void Awake ()
+        public void ActivateClient ()
         {
             _inputActions = new();
             _playerActions = _inputActions.Player;
@@ -27,10 +28,18 @@ namespace Boxfriend.Player
             
             _playerActions.Interact.performed += _ => OnInteract?.Invoke();
             _playerActions.ToggleLight.performed += _ => OnToggleLight?.Invoke();
+
+            _playerActions.Sprint.performed += _ => OnSprint?.Invoke(true);
+            _playerActions.Sprint.canceled += _ => OnSprint?.Invoke(false);
+
+            OnEnable();
         }
 
         private void OnEnable ()
         {
+            if (_inputActions is null)
+                return;
+
             _playerActions.Enable();
         }
         private void OnDisable ()

@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Boxfriend.Player
 {
     [RequireComponent(typeof(KinematicCharacterMotor))]
-    public class PlayerMover : MonoBehaviour, ICharacterController
+    public class PlayerMover : MonoBehaviour, ICharacterController, IClientSideComponent
     {
         [SerializeField] private KinematicCharacterMotor _characterMotor;
 
@@ -15,14 +15,14 @@ namespace Boxfriend.Player
 
         [SerializeField] private LayerMask _collisionMask;
         [SerializeField] private PlayerInputProvider _inputProvider;
-        [SerializeField] private float _walkSpeed, _sprintSpeed, _maxSpeed;
+        [SerializeField] private float _walkSpeed, _sprintSpeed;
         [SerializeField] private float _rotateSpeed;
 
         private Vector3 _moveDirection;
-        private Vector3 _groundNormal = Vector3.up;
 
         private float _yRotation;
-        private void Awake ()
+        private bool _sprinting;
+        public void ActivateClient ()
         {
             _characterMotor.CharacterController = this;
             Cursor.lockState = CursorLockMode.Locked;
@@ -30,52 +30,23 @@ namespace Boxfriend.Player
             _inputProvider.OnRotation += ctx => _yRotation = ctx;
         }
 
-        private void Start ()
-        {
-            
-        }
+        public void AfterCharacterUpdate (float deltaTime) { }
 
-        public void AfterCharacterUpdate (float deltaTime)
-        {
-            
-        }
-
-        public void BeforeCharacterUpdate (float deltaTime)
-        {
-            
-        }
+        public void BeforeCharacterUpdate (float deltaTime) { }
 
         public bool IsColliderValidForCollisions (Collider coll) => (_collisionMask & (1 << coll.gameObject.layer)) != 0;
 
-        public void OnDiscreteCollisionDetected (Collider hitCollider)
-        {
-            
-        }
+        public void OnDiscreteCollisionDetected (Collider hitCollider) { }
 
-        public void OnGroundHit (Collider hitCollider, Vector3 hitNormal, Vector3 hitPoint, ref HitStabilityReport hitStabilityReport)
-        {
-            _groundNormal = hitNormal;
-        }
+        public void OnGroundHit (Collider hitCollider, Vector3 hitNormal, Vector3 hitPoint, ref HitStabilityReport hitStabilityReport) { }
 
-        public void OnMovementHit (Collider hitCollider, Vector3 hitNormal, Vector3 hitPoint, ref HitStabilityReport hitStabilityReport)
-        {
-            
-        }
+        public void OnMovementHit (Collider hitCollider, Vector3 hitNormal, Vector3 hitPoint, ref HitStabilityReport hitStabilityReport) { }
 
-        public void PostGroundingUpdate (float deltaTime)
-        {
-            
-        }
+        public void PostGroundingUpdate (float deltaTime) { }
 
-        public void ProcessHitStabilityReport (Collider hitCollider, Vector3 hitNormal, Vector3 hitPoint, Vector3 atCharacterPosition, Quaternion atCharacterRotation, ref HitStabilityReport hitStabilityReport)
-        {
-            
-        }
+        public void ProcessHitStabilityReport (Collider hitCollider, Vector3 hitNormal, Vector3 hitPoint, Vector3 atCharacterPosition, Quaternion atCharacterRotation, ref HitStabilityReport hitStabilityReport) { }
 
-        public void UpdateRotation (ref Quaternion currentRotation, float deltaTime)
-        {
-            currentRotation *= Quaternion.AngleAxis(_yRotation * _rotateSpeed, Vector3.up);
-        }
+        public void UpdateRotation (ref Quaternion currentRotation, float deltaTime) => currentRotation *= Quaternion.AngleAxis(_yRotation * _rotateSpeed, Vector3.up);
 
         public void UpdateVelocity (ref Vector3 currentVelocity, float deltaTime)
         {
@@ -83,7 +54,7 @@ namespace Boxfriend.Player
             _currentGravity = (_characterMotor.GroundingStatus.IsStableOnGround ? 0 : gravityForce);
             var gravity = _currentGravity * Vector3.down;
 
-            var speed = false ? _sprintSpeed : _walkSpeed;
+            var speed = _sprinting ? _sprintSpeed : _walkSpeed;
             var moveDirection = transform.TransformDirection(_moveDirection * speed);
 
             currentVelocity = moveDirection + gravity;
@@ -96,7 +67,6 @@ namespace Boxfriend.Player
 
             _walkSpeed = 2f;
             _sprintSpeed = 3f;
-            _maxSpeed = 5f;
             _rotateSpeed = 1f;
 
             _collisionMask = ~0;
