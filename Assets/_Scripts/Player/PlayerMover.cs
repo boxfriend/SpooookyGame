@@ -28,6 +28,7 @@ namespace Boxfriend.Player
             Cursor.lockState = CursorLockMode.Locked;
             _inputProvider.OnMovement += ctx => _moveDirection = ctx;
             _inputProvider.OnRotation += ctx => _yRotation = ctx;
+            _inputProvider.OnSprint += ctx => _sprinting = ctx;
         }
 
         public void AfterCharacterUpdate (float deltaTime) { }
