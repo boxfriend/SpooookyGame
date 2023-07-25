@@ -84,7 +84,7 @@ namespace Boxfriend.Player
             var gravity = _currentGravity * Vector3.down;
 
             var speed = false ? _sprintSpeed : _walkSpeed;
-            var moveDirection = Vector3.ProjectOnPlane(transform.TransformDirection(_moveDirection * speed), _groundNormal);
+            var moveDirection = transform.TransformDirection(_moveDirection * speed);
 
             currentVelocity = moveDirection + gravity;
         }
