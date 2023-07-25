@@ -22,9 +22,9 @@ namespace Boxfriend.Player
 
         private float _yRotation;
         private bool _sprinting;
+        private void Awake () => _characterMotor.CharacterController = this;
         public void ActivateClient ()
         {
-            _characterMotor.CharacterController = this;
             Cursor.lockState = CursorLockMode.Locked;
             _inputProvider.OnMovement += ctx => _moveDirection = ctx;
             _inputProvider.OnRotation += ctx => _yRotation = ctx;
