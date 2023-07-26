@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Boxfriend
 {
-    public class Flashlight : MonoBehaviour
+    public class Flashlight : MonoBehaviour, IClientSideComponent
     {
         [SerializeField] private PlayerInputProvider _inputProvider;
         [SerializeField] private Light _light;
@@ -15,7 +15,7 @@ namespace Boxfriend
 
         public event Action<float> OnChargeChange;
 
-        private void Awake ()
+        public void ActivateClient ()
         {
             _inputProvider.OnToggleLight += ToggleLight;
         }
