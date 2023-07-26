@@ -1,4 +1,6 @@
-﻿using KinematicCharacterController;
+﻿using System.Collections.Generic;
+using KinematicCharacterController;
+using NUnit.Framework;
 using UnityEngine;
 
 namespace Boxfriend.Player
@@ -15,7 +17,10 @@ namespace Boxfriend.Player
 
         [SerializeField] private LayerMask _collisionMask;
         [SerializeField] private PlayerInputProvider _inputProvider;
-        [SerializeField] private float _walkSpeed, _sprintSpeed;
+
+        [Header("Movement Speeds")]
+        [SerializeField] private float _walkSpeed;
+        [SerializeField] private float _sprintSpeed;
         [SerializeField] private float _rotateSpeed;
 
         private Vector3 _moveDirection;
@@ -71,6 +76,8 @@ namespace Boxfriend.Player
             _rotateSpeed = 1f;
 
             _collisionMask = ~0;
+
+
         }
 
     }
