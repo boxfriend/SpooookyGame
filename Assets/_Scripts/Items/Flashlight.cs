@@ -64,5 +64,17 @@ namespace Boxfriend
 
             return remaining;
         }
+
+        public readonly struct FlashlightState
+        {
+            public bool Enabled { get; }
+            public float Charge { get; }
+
+            public FlashlightState(bool enabled, float charge)
+            {
+                Enabled = enabled;
+                Charge = charge;
+            }
+        }
     }
 }
