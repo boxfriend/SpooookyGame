@@ -16,4 +16,18 @@ namespace Boxfriend.Networking
             CharacterMotorState = characterMotorState;
         }
     }
+
+    [MessagePackObject]
+    public readonly struct FlashlightState
+    {
+        [Key(0)] public bool Enabled { get; }
+        [Key(1)] public float Charge { get; }
+
+        [SerializationConstructor]
+        public FlashlightState (bool enabled, float charge)
+        {
+            Enabled = enabled;
+            Charge = charge;
+        }
+    }
 }
