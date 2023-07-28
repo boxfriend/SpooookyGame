@@ -1,0 +1,1 @@
+dotnet mpc -i "Boxfriend.csproj" -o "Assets\_Scripts\Generated\MessagePackGenerated.cs" -n "Boxfriend.Serialization" -r "BoxfriendResolver"
