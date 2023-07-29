@@ -38,11 +38,56 @@ namespace Boxfriend.Utilities
             UpdateNodePosition(node);
             return true;
         }
+
+        public void ModifyPriority(T item, float priorityModifier)
+        {
+            if (_contained.TryGetValue(item, out var node))
+            {
+                node.Priority += priorityModifier;
+                UpdateNodePosition(node);
+            }
+        }
+
         private void UpdateNodePosition(QueueNode node)
         {
             while (TryMoveLower(node));
             while (TryMoveHigher(node));
         }
+
+        public void AssignNewPriority (T item, float newPriority)
+        {
+            if (_contained.TryGetValue(item, out var node))
+            {
+                node.Priority = newPriority;
+                UpdateNodePosition(node);
+            }
+        }
+
+        public void Remove (T item)
+        {
+            if(_head == null)
+                return;
+
+            if(_contained.TryGetValue(item, out var node))
+            {
+                Remove(node);
+                _contained.Remove(item);
+            }
+
+        }
+
+        private void Remove(QueueNode node)
+        {
+            var prev = node.Previous;
+            var next = node.Next;
+
+            if(prev != null)
+                prev.Next = next;
+
+            if(next != null)
+                next.Previous = prev;
+        }
+
         private bool TryMoveLower (QueueNode node)
         {
             var next = node.Next;
