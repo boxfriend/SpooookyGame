@@ -5,6 +5,10 @@ namespace Boxfriend.Utilities
 {
     public class PriorityQueue<T>
     {
+        private readonly Dictionary<T, QueueNode> _contained = new();
+        private QueueNode _head = null;
+
+        public int Count => _contained.Count;
         private class QueueNode
         {
             public T Item { get; }
