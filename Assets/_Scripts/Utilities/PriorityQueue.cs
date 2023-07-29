@@ -9,6 +9,20 @@ namespace Boxfriend.Utilities
         private QueueNode _head = null;
 
         public int Count => _contained.Count;
+
+        public bool Dequeue(out T item)
+        {
+            item = default;
+            if(_head == null)
+                return false;
+            
+            var node = _head;
+            node.Priority = node.BasePriority;
+            UpdateNodePosition(node);
+            item = node.Item;
+            return true;
+        }
+
         public bool TryEnqueue(T item, float basePriority)
         {
             if (_contained.ContainsKey(item))
