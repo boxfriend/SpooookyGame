@@ -11,13 +11,19 @@ namespace Boxfriend.Utilities
         public int Count => _contained.Count;
 
         public bool Dequeue(out T item)
+        public bool Dequeue(out T item, bool assignBasePriority = false)
         {
             item = default;
             if(_head == null)
                 return false;
             
             var node = _head;
-            node.Priority = node.BasePriority;
+
+            if(assignBasePriority)
+                node.Priority = node.BasePriority;
+            else
+                node.Priority = 0;
+
             UpdateNodePosition(node);
             item = node.Item;
             return true;
