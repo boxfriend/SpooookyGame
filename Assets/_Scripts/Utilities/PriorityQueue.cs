@@ -135,15 +135,20 @@ namespace Boxfriend.Utilities
             if (next == null || next.Priority <= node.Priority)
                 return false;
 
-            if(node.Previous != null)
-                node.Previous.Next = next;
-
             if (node == _head)
                 _head = next;
 
-            node.Next = next.Next;
+            var oldPrev = node.Previous;
+            next.Previous = oldPrev;
+            if (oldPrev != null)
+                oldPrev.Next = next;
+
+            var newNext = next.Next;
+            node.Next = newNext;
+            if (newNext != null)
+                newNext.Previous = node;
+
             next.Next = node;
-            next.Previous = node.Previous;
             node.Previous = next;
 
             return true;
@@ -159,12 +164,17 @@ namespace Boxfriend.Utilities
             if (prev == _head)
                 _head = node;
 
-            if(node.Next != null)
-                node.Next.Previous = prev;
+            var oldNext = node.Next;
+            prev.Next = oldNext;
+            if (oldNext != null)
+                oldNext.Previous = prev;
 
-            node.Previous = prev.Previous;
+            var newPrev = prev.Previous;
+            node.Previous = newPrev;
+            if (newPrev != null)
+                newPrev.Next = node;
+
             prev.Previous = node;
-            prev.Next = node.Next;
             node.Next = prev;
 
             return true;
