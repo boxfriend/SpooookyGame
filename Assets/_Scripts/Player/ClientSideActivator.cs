@@ -7,8 +7,6 @@ namespace Boxfriend.Player
 {
     public class ClientSideActivator : NetworkBehaviour
     {
-        [SerializeField] private CinemachineVirtualCamera _vcam;
-
         public override void OnNetworkSpawn()
         {
             if(IsLocalPlayer)
@@ -20,13 +18,11 @@ namespace Boxfriend.Player
         [ContextMenu("ActivateClient")]
         private void ActivateClients()
         {
-            var clientSides = GetComponentsInChildren<IClientSideComponent>(true);
+            var clientSides = transform.root.GetComponentsInChildren<IClientSideComponent>(true);
             foreach (var client in clientSides)
             {
                 client.ActivateClient();
             }
-
-            _vcam.enabled = true;
         }
     }
 }
