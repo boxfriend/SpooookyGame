@@ -509,7 +509,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh35336
+  m_Name: pb_Mesh35152
   serializedVersion: 11
   m_SubMeshes:
   - serializedVersion: 2
@@ -3284,6 +3284,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 778110839429967409, guid: 02c4b778393407447998a0c05ec707a1,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 963065373734638518, guid: 02c4b778393407447998a0c05ec707a1,
         type: 3}
       propertyPath: _vcam
