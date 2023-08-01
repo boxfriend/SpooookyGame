@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 namespace Boxfriend.Player
 {
-    public class PlayerInputProvider : MonoBehaviour, IClientSideComponent
+    public class InputProvider : MonoBehaviour, IClientSideComponent
     {
         private InputActions _inputActions;
         private InputActions.PlayerActions _playerActions;

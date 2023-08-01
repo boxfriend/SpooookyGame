@@ -7,7 +7,7 @@ namespace Boxfriend
 {
     public class Flashlight : MonoBehaviour, IClientSideComponent
     {
-        [SerializeField] private PlayerInputProvider _inputProvider;
+        [SerializeField] private InputProvider _inputProvider;
         [SerializeField] private Light _light;
 
         [ShowNonSerializedField] private float _lightCharge = 1f;
@@ -49,7 +49,6 @@ namespace Boxfriend
         [Button]
         private void Recharge () => TryRecharge(100);
 #endif
-
 
         public float TryRecharge(float rechargeAmount)
         {

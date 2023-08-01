@@ -1,13 +1,12 @@
-﻿using System.Collections.Generic;
-using KinematicCharacterController;
-using NUnit.Framework;
+﻿using KinematicCharacterController;
+using NaughtyAttributes;
 using UnityEngine;
 
 namespace Boxfriend.Player
 {
-    [RequireComponent(typeof(KinematicCharacterMotor))]
-    public class PlayerMover : MonoBehaviour, ICharacterController, IClientSideComponent
+    public class Mover : MonoBehaviour, ICharacterController, IClientSideComponent
     {
+        [Required("KinematicCharacterMotor component must be assigned")]
         [SerializeField] private KinematicCharacterMotor _characterMotor;
 
         [Header("Gravity")]
@@ -16,7 +15,8 @@ namespace Boxfriend.Player
         private float _currentGravity;
 
         [SerializeField] private LayerMask _collisionMask;
-        [SerializeField] private PlayerInputProvider _inputProvider;
+        [Required("InputProvider component must be assigned")]
+        [SerializeField] private InputProvider _inputProvider;
 
         [Header("Movement Speeds")]
         [SerializeField] private float _walkSpeed;
@@ -34,6 +34,8 @@ namespace Boxfriend.Player
             _inputProvider.OnMovement += ctx => _moveDirection = ctx;
             _inputProvider.OnRotation += ctx => _yRotation = ctx;
             _inputProvider.OnSprint += ctx => _sprinting = ctx;
+
+            _characterMotor.enabled = true;
         }
 
         public void AfterCharacterUpdate (float deltaTime) { }
@@ -68,8 +70,8 @@ namespace Boxfriend.Player
 
         private void Reset ()
         {
-            _characterMotor = GetComponent<KinematicCharacterMotor>();
-            _inputProvider = GetComponentInChildren<PlayerInputProvider>();
+            _characterMotor = transform.root.GetComponentInChildren<KinematicCharacterMotor>();
+            _inputProvider = transform.root.GetComponentInChildren<InputProvider>();
 
             _walkSpeed = 2f;
             _sprintSpeed = 3f;
