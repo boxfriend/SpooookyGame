@@ -827,4 +827,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _inputProvider: {fileID: 7745449064590699518}
   _light: {fileID: 5559524323170523344}
-  _lightDuration: 10
+  _lightDuration: 300
